@@ -1,0 +1,49 @@
+﻿@model IEnumerable<LogicaAplicacion.Dtos.Usuarios.UsuarioDto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Crear Usuario</a>
+</p>
+@if(Model != null && Model.Count() > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Apellido
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Apellido)
+                    </td>
+                <td>
+                        @Html.ActionLink("Editar", "Edit", "Usuario", new { Id = item.Id }) |
+                        @Html.ActionLink("Detalles", "Details", "Usuario", new { Id = item.Id }) |
+                        @Html.ActionLink("Eliminar", "Delete", "Usuario", new { Id = item.Id })
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>
+        No hay usuarios registrados.
+    </p>
+}
