@@ -8,9 +8,13 @@ namespace LogicaNegocio.Excepciones.Articulo
 {
     public class CodigoArticuloInvalidoException : ArticuloException
     {
-        public CodigoArticuloInvalidoException() : base("El codigo del articulo es invalido.")
+        public CodigoArticuloInvalidoException(string message) : base(message)
         {
 
+        }
+
+        public CodigoArticuloInvalidoException() : base("El codigo del articulo es invalido.")
+        {
         }
     }
 }

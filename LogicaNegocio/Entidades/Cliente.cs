@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LogicaNegocio.Excepciones.Cliente;
 using LogicaNegocio.IntefacesDominio;
-using LogicaNegocio.ValueObject;
+using LogicaNegocio.ValueObject.Cliente;
 namespace LogicaNegocio.Entidades
 {
     public class Cliente : IEntity, IValidable
@@ -21,7 +22,10 @@ namespace LogicaNegocio.Entidades
 
         public void Validar()
         {
-            throw new NotImplementedException();
+            if (RazonSocial.Length == 13)
+            {
+                throw new LargoDelRUTInvalidoException();
+            }
         }
     }
 }

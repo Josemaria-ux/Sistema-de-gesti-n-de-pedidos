@@ -1,0 +1,111 @@
+﻿@using LogicaAplicacion.Dtos.Pedidos
+@using LogicaAplicacion.Dtos.Lineas
+@model LogicaAplicacion.Dtos.Pedidos.PedidoDto
+@{
+    ViewData["Title"] = "Create";
+}
+
+@if (ViewBag.Error != null)
+{
+<div class="alert alert-danger" role="alert">
+        <p>@ViewBag.Message</p>
+</div>
+}
+
+
+<h1>Create</h1>
+
+<h4>PedidoDto</h4>
+<hr />
+    <div class="row">
+        <div class="col-6">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Discriminador" class="control-label"></label>
+                    <select asp-for="Discriminador">
+                        <option value="Comun">Comun</option>
+                        <option value="Express">Express</option>
+                    </select>
+                    <span asp-validation-for="Discriminador" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ClienteId" class="control-label"></label>
+                    <input asp-for="ClienteId" class="form-control" />
+                    <span asp-validation-for="ClienteId" class="text-danger"></span>
+                </div>
+                <div class="form-group m-2">
+                    <label asp-for="FEntrega" class="control-label"></label>
+                    <input asp-for="FEntrega" type="date" lass="form-control" value="@DateTime.Now"/>
+                    <span asp-validation-for="FEntrega" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Unudades" class="control-label"></label>
+                    <input asp-for="Unudades" class="form-control" disabled value="@Model.Unudades" />
+                    <span asp-validation-for="Unudades" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CostoTotal" class="control-label"></label>
+                    <input asp-for="CostoTotal" class="form-control" disabled value="@Model.CostoTotal" />
+                    <span asp-validation-for="CostoTotal" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                @if (Model.Items.Count == 0)
+                {
+                    <input type="submit" value="Create" class="btn btn-primary m-2" disabled/>
+                }
+                else
+                {
+                    <input type="submit" value="Create" class="btn btn-primary m-2" />
+                }
+            </div>
+            </form>
+        </div>
+        <div class="col-6">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Articulo
+                        </th>
+                        <th>
+                            Unidades
+                        </th>
+                        <th>
+                            Precio
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (LineaDto item in Model.Items)
+                    {
+                        <tr>
+                            <td>
+                                @item.ArticuloNombre
+                            </td>
+                            <td>
+                                @item.Unidades
+                            </td>
+                            <td>
+                                @(item.Unidades * item.Precio)
+                            </td>
+
+                            <td>
+                            @Html.ActionLink("Eliminar", "EliminarLinea", new { ArticuloId = item.ArticuloId }, new { @class = "btn btn-dark m-1" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        @Html.ActionLink("Agregar Articulo", "ListaArticulos", new {}, new { @class = "btn btn-dark m-1" })
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-success">Volver a la lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

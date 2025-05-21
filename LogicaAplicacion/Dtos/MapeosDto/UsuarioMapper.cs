@@ -1,6 +1,6 @@
 ﻿using LogicaAplicacion.Dtos.Usuarios;
 using LogicaNegocio.Entidades;
-using LogicaNegocio.ValueObject;
+using LogicaNegocio.ValueObject.Usuario;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,17 +13,44 @@ namespace LogicaAplicacion.Dtos.MapeosDto
     {
         public static Usuario FromDto(UsuarioDto usuarioDto)
         {
-            return new Normal()
+            if (usuarioDto.Discriminador == Admin.RolValor)
             {
-                Email = new Email(usuarioDto.Email),
-                NombreCompleto = new NombreUsuario(usuarioDto.Nombre, usuarioDto.Apellido),
-                Password = new Password(usuarioDto.password)
-            };
+                return new Admin()
+                {
+                    Email = new Email(usuarioDto.Email),
+                    NombreCompleto = new NombreUsuario(usuarioDto.Nombre, usuarioDto.Apellido),
+                    Password = new Password(usuarioDto.password),
+                    PassHash = usuarioDto.passHash,
+                    Eliminado = usuarioDto.Eliminado,
+                    Discriminator = usuarioDto.Discriminador
+                };
+            }
+            else
+            {
+                return new Normal()
+                {
+                    Email = new Email(usuarioDto.Email),
+                    NombreCompleto = new NombreUsuario(usuarioDto.Nombre, usuarioDto.Apellido),
+                    Password = new Password(usuarioDto.password),
+                    PassHash = usuarioDto.passHash,
+                    Eliminado = usuarioDto.Eliminado,
+                    Discriminator = usuarioDto.Discriminador
+                };
+            }
         }
 
         public static UsuarioDto ToDto(Usuario usuario)
         {
-            return new UsuarioDto(usuario.Id,usuario.Email.Value,usuario.NombreCompleto.Name,usuario.NombreCompleto.Apellido,usuario.Password.Value);
+            string discriminador = "";
+            if(usuario is Admin)
+            {
+                discriminador = "Admin";
+            }
+            if (usuario is Normal)
+            {
+                discriminador = "Normal";
+            }
+            return new UsuarioDto(usuario.Id,usuario.Email.Value,usuario.NombreCompleto.Name,usuario.NombreCompleto.Apellido,usuario.Password.Value, usuario.PassHash,discriminador, usuario.Eliminado);
         }
 
         public static IEnumerable<UsuarioDto> ToListaDto(IEnumerable<Usuario> usuarios)

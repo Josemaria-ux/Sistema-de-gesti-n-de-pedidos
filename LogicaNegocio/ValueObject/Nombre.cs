@@ -16,6 +16,10 @@ namespace LogicaNegocio.ValueObject
             Name = nom;
         }
 
+        public Nombre()
+        {
+        }
+
         public abstract void Validar();
 
     }

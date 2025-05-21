@@ -1,0 +1,50 @@
+﻿@model IEnumerable<LogicaAplicacion.Dtos.Articulos.ArticuloDto>
+
+@{
+    ViewData["Title"] = "ListaArticulos";
+}
+
+<h1>ListaArticulos</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-dark">Ver Pedido</a>
+</p>
+
+@if (ViewBag.Mensaje != null)
+{
+    <div class="alert alert-danger" role="alert">
+        <p>@ViewBag.Mensaje</p>
+    </div>
+}
+
+<div class="row ">
+    @foreach (var item in Model)
+    {
+        <div class="card col-3 m-1 rounded">
+            <div class="card-body">
+                <div class="container-fluid row">
+                    <h5 class="card-title">@item.Nombre</h5>
+                    <h6 class="card-subtitle mb-2 text-muted"> $@item.Precio</h6>
+                    <p class="card-text">@item.Descripcion</p>
+                    <form action="AgregarItem" method="post" class=" ">
+                        <input type="text" name="CodigoBarras" id="CodigoBarras" value="@item.CodigoBarras" hidden />
+                        <div class="">
+                            <div class="input-group">
+                                <select class="custom-select p-1 m-2" id="unidades" name="unidades">
+                                    <option selected>Unidades..</option>
+                                    @for (int i = 1; i < item.Stock; i++)
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary m-2">Agregar al pedido</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+

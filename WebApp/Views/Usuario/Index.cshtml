@@ -1,49 +1,41 @@
-﻿@model IEnumerable<LogicaAplicacion.Dtos.Usuarios.UsuarioDto>
+﻿@model LogicaNegocio.Entidades.Usuario
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Login</h1>
 
-<p>
-    <a asp-action="Create">Crear Usuario</a>
-</p>
-@if(Model != null && Model.Count() > 0)
+@if (@ViewBag.Mensaje != null)
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Nombre
-                </th>
-                <th>
-                    Apellido
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-    @foreach (var item in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Apellido)
-                    </td>
-                <td>
-                        @Html.ActionLink("Editar", "Edit", "Usuario", new { Id = item.Id }) |
-                        @Html.ActionLink("Detalles", "Details", "Usuario", new { Id = item.Id }) |
-                        @Html.ActionLink("Eliminar", "Delete", "Usuario", new { Id = item.Id })
-                </td>
-            </tr>
-    }
-        </tbody>
-    </table>
+    <div class="alert alert-danger pt-3 pb-4" role="alert">
+        <p>@ViewBag.Mensaje</p>
+    </div>
 }
-else
-{
-    <p>
-        No hay usuarios registrados.
-    </p>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary m-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

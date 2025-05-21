@@ -12,5 +12,9 @@ namespace LogicaNegocio.Excepciones.Pedido
         {
 
         }
+        public FechaPedidoPedidoInvalidoException(string msg) : base(msg)
+        {
+
+        }
     }
 }

@@ -1,0 +1,91 @@
+﻿@model IEnumerable<LogicaAplicacion.Dtos.Pedidos.PedidoDto>
+
+@{
+    ViewData["Title"] = "ListarPedidosEliminar";
+}
+
+<h1>ListarPedidosEliminar</h1>
+
+<form class="row g-3" asp-action="ListarPedidosEliminar" method="get">
+    <div class="mb-3 col-6 ">
+        <label for="fecha" class="form-label">Buscar fecha</label>
+        <input type="date" class="form-control" name="fecha" id="fecha">
+    </div>
+    <div class="col-6 mt-2 flex">
+        <button type="submit" class="btn btn-primary ">Buscar</button>
+    </div>
+</form>
+
+@if(Model.Count() == 0){
+    <p>No se encontraron pedidos</p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Discriminador)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Entregado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Anulado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClienteId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Unudades)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FPedido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FEntrega)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CostoTotal)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discriminador)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Entregado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anulado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClienteId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unudades)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FPedido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FEntrega)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CostoTotal)
+            </td>
+            <td>
+                 @Html.ActionLink("Delete", "Anular", new { id = item.Id }, new { @class = "btn btn-dark m-1" })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

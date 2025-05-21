@@ -19,13 +19,38 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if (Context.Session.GetString("rol") == null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Home</a>
+                            </li>
+                        }
+                        @if (Context.Session.GetString("rol") == "admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index">Cliente</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Pedido" asp-action="Index">Pedido</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Articulo" asp-action="Index">Articulo</a>
+                            </li>
+                        }
+                        @if (Context.Session.GetString("rol") == "normal")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Details">Detalles</a>
+                            </li>
+                        }
                     </ul>
+                    @if (Context.Session.GetString("rol") == "admin" || Context.Session.GetString("rol") == "normal")
+                    {
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Logout">Cerrar Sesión</a>
+                    }
                 </div>
             </div>
         </nav>

@@ -10,8 +10,6 @@ namespace LogicaNegocio.InterfazRepositorio
 {
     public interface IRepositorioArticulo : IRepositorio<Articulo>
     {
-
-        public IEnumerable<Articulo> GetAll();
-
+        Articulo GetByCB(string id);
     }
 }

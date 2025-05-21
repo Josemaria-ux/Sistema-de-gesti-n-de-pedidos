@@ -9,6 +9,8 @@ namespace LogicaNegocio.Excepciones.Usuario
     public class EmailInvalidoVacioException : UsuarioException
     {
         public EmailInvalidoVacioException() : base("El email no puede estar vacio") { }
+        public EmailInvalidoVacioException(string message) : base(message) { }
+
 
     }
 }

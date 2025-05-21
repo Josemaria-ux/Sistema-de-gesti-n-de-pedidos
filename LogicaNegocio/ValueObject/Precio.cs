@@ -17,6 +17,10 @@ namespace LogicaNegocio.ValueObject
             Validar();
         }
 
+        public Precio()
+        {
+        }
+
         private void Validar() 
         {
         if( Value == null || Value < 0)

@@ -1,16 +1,13 @@
-﻿using Infraestructura.LogicaAccesoDatos.EF;
+﻿
+using LogicaAplicacion.Dtos.Articulos;
+using LogicaAplicacion.Dtos.MapeosDto;
 using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfazRepositorio;
 using LogicaNegocio.InterfazServicios;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LogicaAplicacion.Articulos
 {
-    public class AltaArticulo : IAlta<Articulo>
+    public class AltaArticulo : IAlta<ArticuloDto>
     {
         IRepositorioArticulo _repositorioArticulo;
 
@@ -19,9 +16,10 @@ namespace LogicaAplicacion.Articulos
             _repositorioArticulo = repositorioArticulo;
         }
 
-        public void Ejecutar(Articulo articulo)
+        public void Ejecutar(ArticuloDto articulo)
         {
-            _repositorioArticulo.Add(articulo);
+            Articulo art = ArticuloMapper.FromDto(articulo);
+            _repositorioArticulo.Add(art);
         }
 
     }

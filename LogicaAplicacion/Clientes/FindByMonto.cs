@@ -1,4 +1,6 @@
-﻿using LogicaNegocio.Entidades;
+﻿using LogicaAplicacion.Dtos.Clientes;
+using LogicaAplicacion.Dtos.MapeosDto;
+using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfazRepositorio;
 using LogicaNegocio.InterfazServicios;
 using System;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.Clientes
 {
-    public class FindByMonto : IFindByMonto<Cliente>
+    public class FindByMonto : IFindByMonto<ClienteDto>
     {
         IRepositorioCliente _repoCliente;
 
@@ -21,9 +23,11 @@ namespace LogicaAplicacion.Clientes
         {
             _repoCliente = repoCliente;
         }
-        public IEnumerable<Cliente> Ejecutar(double monto)
+        public IEnumerable<ClienteDto> Ejecutar(double monto)
         {
-            return _repoCliente.GetByMonto(monto);   
+
+            IEnumerable<ClienteDto> clientesDtos = ClienteMapper.ToListaDto(_repoCliente.GetByMonto(monto));
+            return clientesDtos;
         }
     }
 }

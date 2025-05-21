@@ -9,7 +9,7 @@ namespace LogicaNegocio.InterfazRepositorio
 {
     public interface IRepositorioCliente : IRepositorio<Cliente>
     {
-        public IEnumerable<Cliente> GetByName(string txt);
+        public IEnumerable<Cliente> GetByRazonSocial(string txt);
 
         public IEnumerable<Cliente> GetByMonto(double monto);
     }

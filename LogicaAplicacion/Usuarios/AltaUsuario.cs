@@ -19,6 +19,7 @@ namespace LogicaAplicacion.Usuarios
         {
             _repoUsuario = repoUsuario;
         }
+
         public void Ejecutar(UsuarioDto obj)
         {
             Usuario user = UsuarioMapper.FromDto(obj);

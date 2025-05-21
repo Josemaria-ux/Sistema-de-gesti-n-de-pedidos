@@ -8,6 +8,8 @@ namespace LogicaNegocio.Excepciones.Cliente
 {
     public class CiudadInvalidaException : ClienteException
     {
+
+        public CiudadInvalidaException(string message) : base(message) { }
         public CiudadInvalidaException(): base ("La ciudad ingresada no es la correcta debe tener mas de 2 caracteres") { }
     }
 }

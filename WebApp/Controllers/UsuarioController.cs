@@ -1,13 +1,14 @@
-﻿using Infraestructura.LogicaAccesoDatos.Excepciones;
+﻿
+using Infraestructura.LogicaAccesoDatos.Excepciones;
 using LogicaAplicacion.Dtos.Usuarios;
-using LogicaAplicacion.Usuarios;
 using LogicaNegocio.Entidades;
-using LogicaNegocio.Excepciones.Usuario;
 using LogicaNegocio.InterfazServicios;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Filter;
 
 namespace WebApp.Controllers
 {
+    
     public class UsuarioController : Controller
     {
         IObtenerTodos<UsuarioDto> _getAll;
@@ -15,13 +16,15 @@ namespace WebApp.Controllers
         IObtener<UsuarioDto> _obtener;
         IEditar<UsuarioDto> _editar;
         IEliminar<UsuarioDto> _eliminar;
+        ILogin<UsuarioDto> _obtenerLogin;
 
         public UsuarioController(
             IObtenerTodos<UsuarioDto> getAll,
             IAlta<UsuarioDto> alta,
             IObtener<UsuarioDto> obtener,
             IEditar<UsuarioDto> editar,
-            IEliminar<UsuarioDto> eliminar
+            IEliminar<UsuarioDto> eliminar,
+            ILogin<UsuarioDto> login
         )
         {
             _getAll = getAll;
@@ -29,109 +32,84 @@ namespace WebApp.Controllers
             _obtener = obtener;
             _editar = editar;
             _eliminar = eliminar;
+            _obtenerLogin = login;
         }
 
-        public IActionResult Index(string mensaje)
-        {
-            ViewBag.Message = mensaje;
-            return View(_getAll.Ejecutar());
-        }
-
-        public IActionResult Login()
+        public IActionResult Index()
         {
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Login(int Id)
-        {
-            return View();
-        }
 
-        public IActionResult Create(string mensaje)
-        {
-            ViewBag.Message = mensaje;
-            return View();
-        }
 
-        [HttpPost]
-
-        public IActionResult Create(UsuarioDto usuarioDto)
+        public IActionResult Login(string Email, string Password)
         {
             try
             {
-                _alta.Ejecutar(usuarioDto);
-                return RedirectToAction("Index", new { mensaje = "El usuario fue creado correctamente" });
-            }
-            catch (UsuarioException ex)
+                if (Email != null && Password != null)
+                {
+                    UsuarioDto usuario = _obtenerLogin.Ejecutar(Email, Password);
+
+                    if (usuario == null || usuario.Eliminado)
+                    {
+                        throw new Exception("No se encontro el usuario");
+                    }
+                    if (usuario.Discriminador.Equals(Admin.RolValor))
+                    {
+                        HttpContext.Session.SetString("rol", "admin");
+
+                        return Redirect("/Admin/index");
+                    }
+                    else if (usuario.Discriminador.Equals(Normal.RolValor))
+                    {
+                        HttpContext.Session.SetString("rol", "normal");
+                    }
+                    HttpContext.Session.SetString("nombre", usuario.Nombre);
+                    HttpContext.Session.SetString("id", Convert.ToString(usuario.Id));
+                    return RedirectToAction("Details");
+                }
+                }catch (Exception ex)
             {
-                return RedirectToAction("Create", new { mensaje = ex.Message });
+                ViewBag.mensaje = "sucedio un problema con su login, intente nuevamente";
             }
-            catch (Exception ex)
-            {
-                return RedirectToAction("Create", new { mensaje = "No se crear el usuario. Intente nuevamente." });
-            }
+            return View("Index");
         }
 
-        public IActionResult Details() 
-        {
-            return View();
-        }
 
-        [HttpPost]
-        public IActionResult Details(int Id)
-        {
-            return View();
-        }
-
-        public IActionResult Delete(int Id)
-        {
-            try
-            {
-                _eliminar.Ejecutar(Id);
-                return RedirectToAction("Index", new { mensaje = "Eliminado correctamente." });
-            }
-            catch (NotFoundException e)
-            {
-                return RedirectToAction("Index", new { mensaje = e.Message });
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction("Index", new { mensaje = "No se pudo elimianar, intentelo mas tarde nuevamente" });
-            }
-        }
-
-        public IActionResult Edit(string mensaje, int Id)
-        {
-            if (Id == null)
-            {
-                return RedirectToAction("Index");
-            }
-            ViewBag.Message = mensaje;
-            UsuarioDto usuarioDto = _obtener.Ejecutar(Id);
-            if (usuarioDto == null)
-            {
-                return RedirectToAction("Index", new { mensaje = "No se encontró el usuario"});
-            }
-            return View(usuarioDto);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(UsuarioDto usuarioDto, int Id)
+        [AdminOUsuarioAutroizado]
+        public IActionResult Logout()
         {
             try
             {
-                _editar.Ejecutar(Id, usuarioDto);
-                return RedirectToAction("Index", new { mensaje = "Editado correctamente." });
+                HttpContext.Session.Clear();
+                return RedirectToAction("Login");
+
             }
-            catch (UsuarioException e)
+            catch
             {
-                return RedirectToAction("Edit", new { mensaje = e.Message });
+                ViewBag.mensaje = "problema para cerrar sesion";
             }
-            catch (Exception e)
-            {
-                return RedirectToAction("Edit", new { mensaje = "No se pudo editar, intentelo mas tarde nuevamente" });
+            return View("Index");
+        }
+
+
+        [AdminOUsuarioAutroizado]
+        public IActionResult Details()
+        {
+            int Id = Convert.ToInt16(HttpContext.Session.GetString("id"));
+            try
+                {
+                    UsuarioDto User = _obtener.Ejecutar(Id);
+                    if (User == null)
+                    {
+                        throw new Exception("No se encontro el id");
+                    }
+                    return View(User);
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("Index", new { mensaje = "No se encontró el usuario de Id: " + Id });
+                }
             }
         }
     }
-}

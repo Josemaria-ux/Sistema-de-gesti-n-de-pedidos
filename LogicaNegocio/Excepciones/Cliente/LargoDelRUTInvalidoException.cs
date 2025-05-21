@@ -8,6 +8,8 @@ namespace LogicaNegocio.Excepciones.Cliente
 {
     public class LargoDelRUTInvalidoException : ClienteException
     {
-        public LargoDelRUTInvalidoException() : base("El RUT agrgado no cumple los requisitos de manera correcta.") { } 
+        public LargoDelRUTInvalidoException() : base("El RUT agrgado no cumple los requisitos de manera correcta.") { }
+
+        public LargoDelRUTInvalidoException(string message) : base(message) { }
     }
 }

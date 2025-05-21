@@ -8,6 +8,10 @@ namespace LogicaNegocio.Excepciones.Articulo
 {
     public class DescripcionArticuloInavlidoException : ArticuloException
     {
+        public DescripcionArticuloInavlidoException(string message) : base(message)
+        {
+
+        }
         public DescripcionArticuloInavlidoException() : base("El nombre del articulo es invalido.")
         {
 

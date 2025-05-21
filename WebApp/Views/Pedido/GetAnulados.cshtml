@@ -1,0 +1,68 @@
+﻿@model IEnumerable<LogicaAplicacion.Dtos.Pedidos.PedidoDto>
+
+@{
+    ViewData["Title"] = "GetAnulados";
+}
+
+<h1>Pedidos anulados</h1>
+
+@if (Model == null || Model.Count() == 0)
+{
+    <p>No hay pedidos </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FEntrega)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FPedido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CostoTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Entregado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Anulado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Discriminador)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        if()
+        @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FEntrega)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FPedido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CostoTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Entregado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anulado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discriminador)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

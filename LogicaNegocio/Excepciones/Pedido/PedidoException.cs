@@ -9,5 +9,7 @@ namespace LogicaNegocio.Excepciones.Pedido
     public class PedidoException : DomainException
     { 
         public PedidoException(string message) : base(message) { }
+
+        public PedidoException() : base("Hubo un problema con el pedido") { }
     }
 }

@@ -1,46 +1,70 @@
 ﻿using LogicaAplicacion.Clientes;
+using LogicaAplicacion.Dtos.Clientes;
 using LogicaNegocio.Entidades;
+using LogicaNegocio.InterfazServicios;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Filter;
 
 namespace WebApp.Controllers
 {
+    [AdminAutorizado]
     public class ClienteController : Controller
     {
-        FindByMonto _findByMonto = new FindByMonto();
+        IObtenerTodos<ClienteDto> _getAll;
+        IFindByMonto<ClienteDto> _findByMonto;
+        IObtener<ClienteDto> _obtener;
+        IFindByRazonSocial<ClienteDto> _findByRazonSocail;
 
-        public IActionResult Index(string message)
+        public ClienteController(
+            IObtenerTodos<ClienteDto> getAll,
+            IFindByMonto<ClienteDto> findByMonto,
+            IObtener<ClienteDto> obtener,
+            IFindByRazonSocial<ClienteDto> findByRazonSocail
+        )
         {
-            ViewBag.Message = message;
-            return View();
+            _getAll = getAll;
+            _findByMonto = findByMonto;
+            _obtener = obtener;
+            _findByRazonSocail = findByRazonSocail;
         }
 
-        [HttpPost]
 
-        public IActionResult BuscarPorMonto(double monto)
+        public IActionResult Index(string message, double monto, string rs)
+        {
+            ViewBag.Message = message;
+            IEnumerable<ClienteDto> res;
+            if (monto != null && monto > 0)
+            {
+                res = _findByMonto.Ejecutar(monto);
+            }
+            else if (rs != null && rs != "")
+            {
+                res = _findByRazonSocail.Ejecutar(rs);
+            }
+            else
+            {
+                res = _getAll.Ejecutar();
+            }
+            return View(res);
+        }
+
+
+        public IActionResult Details(int Id)
         {
             try
             {
-                return RedirectToAction("BuscarPorMonto", _findByMonto.Ejecutar(monto));
+                ClienteDto cli = _obtener.Ejecutar(Id);
+                if (cli == null)
+                {
+                    throw new Exception("No se encontro el id");
+                }
+                return View(cli);
             }
-            catch (ArgumentException ex)
+            catch (Exception)
             {
-                return RedirectToAction("Index", new { message = ex.Message});
+                return RedirectToAction("Index", new { mensaje = "No se encontró el Cliente de Id: " + Id });
             }
-            catch (Exception ex)
-            {
-                return RedirectToAction("Index", new { message = "No se puedo buscar el/los clientes. Intente nuevamente." });
-            }
-            
         }
 
-        public IActionResult BuscarPorMonto(IEnumerable<Cliente> lista)
-        {
-            return View(lista);
-        }
-
-        public IActionResult BuscarPorNombreOApellido()
-        {
-            return View();
-        }
     }
 }

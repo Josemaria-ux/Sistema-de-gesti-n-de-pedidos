@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.Dtos.Usuarios
 {
-    public record UsuarioDto(int Id, string Email, string Nombre, string Apellido, string password)
+    public record UsuarioDto(int Id, string Email, string Nombre, string Apellido, string password, string passHash,string Discriminador, bool Eliminado)
     {
     }
 }

@@ -1,0 +1,98 @@
+﻿@model LogicaAplicacion.Dtos.Pedidos.PedidoDto
+
+@{
+	ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+	<h4>PedidoDto</h4>
+	<hr />
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Id)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Id)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.ClienteId)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.ClienteId)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Discriminador)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Discriminador)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Entregado)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Entregado)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Anulado)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Anulado)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Unudades)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Unudades)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.FPedido)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.FPedido)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.FEntrega)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.FEntrega)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.CostoTotal)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.CostoTotal)
+		</dd>
+	</dl>
+	@if (Model.Items != null || Model.Items.Count() == 0)
+	{
+		<table class="table">
+			<thead>
+			<th>Id articulo</th>
+			<th>Unidades</th>
+			<th>Precio</th>
+			</thead>
+			<tbody>
+				@foreach (var item in Model.Items)
+				{
+					<tr>
+						<td>
+							@item.ArticuloId
+						</td>
+						<td>
+							@item.Unidades
+						</td>
+						<td>
+							@(item.Precio * item.Unidades)
+						</td>
+					</tr>
+				}
+
+			</tbody>
+		</table>
+	}
+</div>
+<div>
+	<a asp-action="Index" class="btn btn-success">Volver a la lista</a>
+</div>

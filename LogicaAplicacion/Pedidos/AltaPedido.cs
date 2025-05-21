@@ -1,11 +1,9 @@
-﻿using LogicaNegocio.Entidades;
+﻿using LogicaAplicacion.Clientes;
+using LogicaAplicacion.Dtos.MapeosDto;
+using LogicaAplicacion.Dtos.Pedidos;
+using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfazRepositorio;
 using LogicaNegocio.InterfazServicios;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LogicaAplicacion.Pedidos
 {

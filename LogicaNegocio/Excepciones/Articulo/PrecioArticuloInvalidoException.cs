@@ -8,6 +8,10 @@ namespace LogicaNegocio.Excepciones.Articulo
 {
     internal class PrecioArticuloInvalidoException : ArticuloException
     {
+        public PrecioArticuloInvalidoException(string? message) : base(message)
+        {
+
+        }
         public PrecioArticuloInvalidoException() : base("El precio del articulo es invalido.")
         {
 

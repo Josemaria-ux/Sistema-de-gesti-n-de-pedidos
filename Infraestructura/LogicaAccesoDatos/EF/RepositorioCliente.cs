@@ -1,16 +1,12 @@
 ﻿using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfazRepositorio;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Infraestructura.LogicaAccesoDatos.EF
 {
     public class RepositorioCliente : IRepositorioCliente
     {
-        private PedidoContext _context;
+        private static PedidoContext _context;
 
         public RepositorioCliente(PedidoContext context)
         {
@@ -28,27 +24,33 @@ namespace Infraestructura.LogicaAccesoDatos.EF
 
         public IEnumerable<Cliente> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Clientes.AsEnumerable().ToList();
         }
 
         public Cliente GetById(int id)
         {
-            throw new NotImplementedException();
+            Cliente unC= _context.Clientes.FirstOrDefault(cliente => cliente.Id == id);
+            return unC;
         }
 
         public IEnumerable<Cliente> GetByMonto(double monto)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Cliente> GetByName(string txt)
-        {
-            throw new NotImplementedException();
+            var clientes = _context.Clientes
+                .Where(cli =>
+                        cli.pedidos
+                        .Any(ped => ped.CostoTotal >= monto));
+            return clientes.ToList();
         }
 
         public void Update(int id, Cliente obj)
         {
             throw new NotImplementedException();
+        }
+
+        IEnumerable<Cliente> IRepositorioCliente.GetByRazonSocial(string txt)
+        {
+            var clientes = _context.Clientes.Where(cli => cli.RazonSocial.Contains(txt));
+            return clientes.ToList();
         }
     }
 }

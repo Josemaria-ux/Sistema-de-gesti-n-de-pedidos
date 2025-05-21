@@ -9,5 +9,7 @@ namespace LogicaNegocio.Excepciones.Cliente
     public class ClienteException : DomainException
     {
         public ClienteException(string message) : base(message) { }
+
+        public ClienteException() : base("Hubo un problema con el cliente") { }
     }
 }

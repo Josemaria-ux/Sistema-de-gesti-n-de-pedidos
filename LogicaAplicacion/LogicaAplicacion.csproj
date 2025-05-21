@@ -7,12 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\Articulos\" />
-    <Folder Include="Dtos\Clientes\" />
-    <Folder Include="Dtos\Pedidos\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Infraestructura\Infraestructura.csproj" />
     <ProjectReference Include="..\LogicaNegocio\LogicaNegocio.csproj" />
   </ItemGroup>

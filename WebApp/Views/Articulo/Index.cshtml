@@ -1,0 +1,85 @@
+﻿@model IEnumerable<LogicaAplicacion.Dtos.Articulos.ArticuloDto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Lista de Articulos</h1>
+
+@if (@ViewBag.Mensaje != null)
+{
+    <div class="alert alert-danger pt-3 pb-4" role="alert">
+        <p>@ViewBag.Mensaje</p>
+    </div>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear</a>
+</p>
+@if(Model != null && Model.Count() > 0)
+{
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoBarras)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stock)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item.Eliminado == false){
+                <tr>
+                    <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoBarras)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+            <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-dark m-1" }) |
+                            @Html.ActionLink("Details", "Details", new { Id = item.Id }, new { @class = "btn btn-dark m-1" }) |
+                            @Html.ActionLink("Delete", "Delete", new { mensaje = "", id = item.Id }, new { @class = "btn btn-dark m-1" })
+            </td>
+        </tr>
+}
+}
+    </tbody>
+    </table>
+}
+else
+{
+    <p>
+        No hay Articulos registrados.
+    </p>
+}

@@ -9,7 +9,7 @@ namespace LogicaNegocio.InterfazRepositorio
 {
     public interface IRepositorioPedido : IRepositorio<Pedido>
     {
-        public void AnularPedido(int id);
+        IEnumerable<Pedido> GetAllFecha(DateTime fecha);
         public IEnumerable<Pedido> GetPedidosAnulados();
     }
 }

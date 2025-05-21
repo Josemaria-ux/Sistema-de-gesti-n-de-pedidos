@@ -9,5 +9,7 @@ namespace LogicaNegocio.Excepciones.Usuario
     public class ApellidoUsuarioInvalidoException : UsuarioException
     {
         public ApellidoUsuarioInvalidoException() : base("El Apelldo tiene que tener como minimo 2 caracteres") { }
+        public ApellidoUsuarioInvalidoException(string message) : base(message) { }
+
     }
 }

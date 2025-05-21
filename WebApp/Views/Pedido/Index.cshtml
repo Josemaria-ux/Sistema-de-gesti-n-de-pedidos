@@ -1,0 +1,78 @@
+﻿@model IEnumerable<LogicaAplicacion.Dtos.Pedidos.PedidoDto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Lista de Pedidos</h1>
+
+@if (@ViewBag.Mensaje != null)
+{
+    <div class="alert alert-danger pt-3 pb-4" role="alert">
+        <p>@ViewBag.Mensaje</p>
+    </div>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear</a>
+    <a asp-action="ListarPedidosEliminar" class="btn btn-primary">Eliminar pedido</a>
+    <a asp-action="GetAnulados" class="btn btn-primary">Ver anulados</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FEntrega)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FPedido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CostoTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Discriminador)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Entregado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Anulado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FEntrega)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FPedido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CostoTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discriminador)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Entregado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anulado)
+            </td>
+            <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-dark m-1" }) 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

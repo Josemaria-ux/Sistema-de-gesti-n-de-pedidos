@@ -7,6 +7,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Parametros.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Cliente\Details.cshtml" />
+    <None Include="Views\Cliente\Index.cshtml" />
+    <None Include="Views\Pedido\Anular.cshtml" />
+    <None Include="Views\Pedido\GetAnulados.cshtml" />
+    <None Include="Views\Pedido\Index.cshtml" />
+    <None Include="Views\Pedido\ListaArticulos.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
   </ItemGroup>
 

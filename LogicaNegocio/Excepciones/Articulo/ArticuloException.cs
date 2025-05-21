@@ -9,6 +9,9 @@ namespace LogicaNegocio.Excepciones.Articulo
     public class ArticuloException : DomainException
     {
         public ArticuloException(string message) : base(message) { }
+
+        public ArticuloException() : base("El articulo es invalido") { }
+
     }
 }
 

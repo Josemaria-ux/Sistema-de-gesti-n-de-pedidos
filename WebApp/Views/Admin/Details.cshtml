@@ -1,0 +1,54 @@
+﻿@model LogicaAplicacion.Dtos.Usuarios.UsuarioDto
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalles de usuario @Model.Nombre</h1>
+
+<div>
+    <h4>UsuarioDto</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Apellido)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Apellido)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.password)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.password)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.passHash)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.passHash)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Editar", "Edit", "Admin", new { Id = Model.Id }, new { @class = "btn btn-dark m-1" })  |
+    <a asp-action="Index" class="btn btn-success">Volver a la lista</a>
+</div>

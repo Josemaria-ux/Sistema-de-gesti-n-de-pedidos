@@ -9,6 +9,6 @@ namespace LogicaNegocio.InterfazServicios
 {
     public interface IFindByMonto<T>
     {
-        public IEnumerable<Cliente> Ejecutar(double monto);
+        public IEnumerable<T> Ejecutar(double monto);
     }
 }

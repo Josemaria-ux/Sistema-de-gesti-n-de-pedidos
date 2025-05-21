@@ -8,6 +8,8 @@ namespace LogicaNegocio.Excepciones.Cliente
 {
     public class CalleInvalidaException : ClienteException
     {
+
+        public CalleInvalidaException(string message) : base(message) { }
         public CalleInvalidaException() : base("La calle ingresada no es correcta, debe tener mas de 2 caracteres.") { }
     }
 }

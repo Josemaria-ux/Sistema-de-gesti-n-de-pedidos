@@ -9,5 +9,6 @@ namespace LogicaNegocio.InterfazRepositorio
 {
     public interface IRepositorioUsuario : IRepositorio<Usuario>
     {
+        public Usuario GetByLogin(string email, string pass);
     }
 }
